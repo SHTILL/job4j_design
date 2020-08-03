@@ -11,7 +11,7 @@ sudo: false
 after_success:
   - bash <(curl -s https://codecov.io/bash)
 
-# Отправлять уведомление на почтуyouremail@smtp.ru(Изменить на свою) если сборка упал
+# Отправлять уведомление на почтуyouremail@smtp.ru(Изменить на свою) если сборка упалa
 notifications:
   email:
     recipients:
