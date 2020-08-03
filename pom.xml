@@ -6,6 +6,7 @@
 
   <groupId>ru.job4j</groupId>
   <artifactId>job4j_design</artifactId>
+  <packaging>pom</packaging>
   <version>1.0-SNAPSHOT</version>
 
   <name>job4j_design</name>
@@ -18,6 +19,14 @@
     <maven.compiler.source>14</maven.compiler.source>
     <maven.compiler.target>14</maven.compiler.target>
   </properties>
+
+  <modules>
+    <module>chapter_001</module>
+    <module>chapter_002</module>
+    <module>chapter_003</module>
+    <module>chapter_004</module>
+    <module>chapter_005</module>
+  </modules>
 
   <dependencies>
     <dependency>
