@@ -5,19 +5,17 @@ import java.util.NoSuchElementException;
 
 public class MatrixIt implements Iterator<Integer> {
     private final int[][] data;
-    private int row = -1;
+    private int row = 0;
     private int column = 0;
 
     public MatrixIt(int[][] data) {
         this.data = data;
-        findNextRow(0);
+        findNextRow();
     }
 
-    private void findNextRow(int start) {
-        row = -1;
-        for (int i0 = start; i0 < data.length; i0++) {
-            if (data[i0].length != 0) {
-                row = i0;
+    private void findNextRow() {
+        for (; row < data.length; row++) {
+            if (data[row].length != 0) {
                 break;
             }
         }
@@ -25,10 +23,7 @@ public class MatrixIt implements Iterator<Integer> {
 
     @Override
     public boolean hasNext() {
-        if (row == -1) {
-            return false;
-        }
-        return data[row].length > column;
+        return (row < data.length);
     }
 
     @Override
@@ -43,7 +38,8 @@ public class MatrixIt implements Iterator<Integer> {
             return rsl;
         }
         column = 0;
-        findNextRow(++row);
+        row++;
+        findNextRow();
         return rsl;
     }
 }
