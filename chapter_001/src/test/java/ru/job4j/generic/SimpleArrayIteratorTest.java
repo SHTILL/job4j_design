@@ -1,7 +1,6 @@
-package ru.job4j.gen;
+package ru.job4j.generic;
 
 import org.junit.Test;
-import ru.job4j.it.ArrayIt;
 
 import java.util.NoSuchElementException;
 

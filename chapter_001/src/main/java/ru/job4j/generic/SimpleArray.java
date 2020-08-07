@@ -1,9 +1,7 @@
-package ru.job4j.gen;
+package ru.job4j.generic;
 
 import java.util.Iterator;
 import java.util.Objects;
-
-import ru.job4j.it.*;
 
 public class SimpleArray<T> implements Iterable<T> {
     Object[] data;
