@@ -4,7 +4,7 @@ import java.util.Iterator;
 import java.util.Objects;
 
 public class SimpleArray<T> implements Iterable<T> {
-    Object[] data;
+    private Object[] data;
     private final int size;
     private int positionAdd = 0;
 
@@ -26,12 +26,9 @@ public class SimpleArray<T> implements Iterable<T> {
 
     public void remove(int index) {
         Objects.checkIndex(index, positionAdd);
-        while (data[index] != null && index < (size - 1)) {
-            data[index] = data[index + 1];
-            index++;
-        }
-        data[index + 1] = null;
+        System.arraycopy(data, (index + 1), data, index, (positionAdd - index - 1));
         positionAdd--;
+        data[positionAdd] = null;
     }
 
     public T get(int index) {
