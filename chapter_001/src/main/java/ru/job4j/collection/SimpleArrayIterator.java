@@ -7,19 +7,22 @@ import java.util.Objects;
 
 public class SimpleArrayIterator<E> implements Iterator<E> {
     private final int expectedModCount;
+    private final int containerSize;
     private Object[] container;
     private SimpleArray<E> array;
     private int position;
 
-    public SimpleArrayIterator(int expectedModCount, Object[] container, SimpleArray<E> array) {
+
+    public SimpleArrayIterator(int expectedModCount, Object[] container, int containerSize, SimpleArray<E> array) {
         this.expectedModCount = expectedModCount;
         this.container = container;
         this.array = array;
+        this.containerSize = containerSize;
     }
 
     @Override
     public boolean hasNext() {
-        return position < container.length;
+        return position < containerSize;
     }
 
     @Override
@@ -30,6 +33,6 @@ public class SimpleArrayIterator<E> implements Iterator<E> {
         if (expectedModCount != array.getModCount()) {
             throw new ConcurrentModificationException();
         }
-        return (E) container[position];
+        return (E) container[position++];
     }
 }

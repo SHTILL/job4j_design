@@ -29,7 +29,7 @@ public class SimpleArray<T> implements Iterable<T> {
 
     @Override
     public Iterator<T> iterator() {
-        return new SimpleArrayIterator<>(modCount, container, this);
+        return new SimpleArrayIterator<>(modCount, container, position, this);
     }
 
     public int getModCount() {
