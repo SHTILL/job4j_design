@@ -53,8 +53,14 @@ public class SimpleLinkedList<E> implements Iterable<E> {
         return getNodeByIndex(index).item;
     }
 
+    public void deleteFirst() {
+        if (head == null) {
+            throw new NoSuchElementException();
+        }
+        head = head.next;
+    }
+
     class SimpleLinkedListIterator<T> implements Iterator<T> {
-        private int size;
         private final int expectedModCount;
         private Node<T> cursor;
 
