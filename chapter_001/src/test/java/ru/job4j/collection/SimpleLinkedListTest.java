@@ -84,4 +84,17 @@ public class SimpleLinkedListTest {
         Iterator<Integer> it = linked.iterator();
         assertThat(it.next(), is(2));
     }
+
+    @Test
+    public void whenDeleteLast() {
+        SimpleLinkedList<Integer> linked = new SimpleLinkedList<>();
+        linked.add(1);
+        linked.add(2);
+        linked.add(3);
+        linked.deleteLast();
+        Iterator<Integer> it = linked.iterator();
+        assertThat(it.next(), is(1));
+        assertThat(it.next(), is(2));
+        assertFalse(it.hasNext());
+    }
 }

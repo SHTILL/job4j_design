@@ -9,10 +9,12 @@ public class SimpleLinkedList<E> implements Iterable<E> {
     private static class Node<E> {
         private E item;
         private Node<E> next;
+        private Node<E> previous;
 
-        Node(E element, Node<E> next) {
+        Node(E element, Node<E> next, Node<E> previous) {
             this.item = element;
             this.next = next;
+            this.previous = previous;
         }
     }
 
@@ -37,12 +39,13 @@ public class SimpleLinkedList<E> implements Iterable<E> {
     }
 
     public void add(E value) {
-        Node<E> node = new Node<>(value, null);
+        Node<E> node = new Node<>(value, null, null);
         if (head == null) {
             head = node;
         } else {
             Node<E> tail = findTail(head);
             tail.next = node;
+            node.previous = tail;
         }
         modCon++;
         size++;
@@ -58,6 +61,22 @@ public class SimpleLinkedList<E> implements Iterable<E> {
             throw new NoSuchElementException();
         }
         head = head.next;
+        modCon++;
+        size--;
+    }
+
+    public void deleteLast() {
+        if (head == null) {
+            throw new NoSuchElementException();
+        }
+        Node<E> tail = findTail(head);
+        if (tail == head) {
+            head = null;
+        } else {
+            tail.previous.next = null;
+        }
+        modCon++;
+        size--;
     }
 
     class SimpleLinkedListIterator<T> implements Iterator<T> {
