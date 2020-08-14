@@ -19,7 +19,7 @@ public class SimpleLinkedListTest {
         assertThat(list.get(1), is("one"));
     }
 
-    @Test(expected = NoSuchElementException.class)
+    @Test(expected = IndexOutOfBoundsException.class)
     public void whenGetNotExisted() {
         SimpleLinkedList<String> list = new SimpleLinkedList<>();
         list.add("zero");

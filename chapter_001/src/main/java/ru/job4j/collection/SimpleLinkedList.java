@@ -3,6 +3,7 @@ package ru.job4j.collection;
 import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
+import java.util.Objects;
 
 public class SimpleLinkedList<E> implements Iterable<E> {
     private static class Node<E> {
@@ -17,6 +18,7 @@ public class SimpleLinkedList<E> implements Iterable<E> {
 
     private Node<E> head;
     private int modCon;
+    private int size;
 
     private Node<E> findTail(Node<E> start) {
         Node<E> cur = start;
@@ -30,9 +32,6 @@ public class SimpleLinkedList<E> implements Iterable<E> {
         Node<E> cur = head;
         for (int i = 0; i < index; i++) {
             cur = cur.next;
-            if (cur == null) {
-                return null;
-            }
         }
         return cur;
     }
@@ -46,14 +45,12 @@ public class SimpleLinkedList<E> implements Iterable<E> {
             tail.next = node;
         }
         modCon++;
+        size++;
     }
 
     public E get(int index) {
-        Node<E> n = getNodeByIndex(index);
-        if (n == null) {
-            throw new NoSuchElementException();
-        }
-        return n.item;
+        Objects.checkIndex(index, size);
+        return getNodeByIndex(index).item;
     }
 
     class SimpleLinkedListIterator<T> implements Iterator<T> {
