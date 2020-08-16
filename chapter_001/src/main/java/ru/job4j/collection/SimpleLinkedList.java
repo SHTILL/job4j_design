@@ -65,7 +65,7 @@ public class SimpleLinkedList<E> implements Iterable<E> {
         size--;
     }
 
-    public void deleteLast() {
+    public E deleteLast() {
         if (head == null) {
             throw new NoSuchElementException();
         }
@@ -77,6 +77,7 @@ public class SimpleLinkedList<E> implements Iterable<E> {
         }
         modCon++;
         size--;
+        return tail.item;
     }
 
     class SimpleLinkedListIterator<T> implements Iterator<T> {
