@@ -80,6 +80,11 @@ public class SimpleLinkedList<E> implements Iterable<E> {
         return tail.item;
     }
 
+    public boolean isEmpty()
+    {
+        return size == 0;
+    }
+
     class SimpleLinkedListIterator<T> implements Iterator<T> {
         private final int expectedModCount;
         private Node<T> cursor;
