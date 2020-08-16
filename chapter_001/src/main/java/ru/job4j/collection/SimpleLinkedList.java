@@ -38,6 +38,17 @@ public class SimpleLinkedList<E> implements Iterable<E> {
         return cur;
     }
 
+    public void addFirst(E value) {
+        Node<E> node = new Node<>(value, null, null);
+        if (head != null) {
+            head.previous = node;
+            node.next = head;
+        }
+        head = node;
+        modCon++;
+        size++;
+    }
+
     public void add(E value) {
         Node<E> node = new Node<>(value, null, null);
         if (head == null) {
@@ -56,13 +67,15 @@ public class SimpleLinkedList<E> implements Iterable<E> {
         return getNodeByIndex(index).item;
     }
 
-    public void deleteFirst() {
+    public E deleteFirst() {
         if (head == null) {
             throw new NoSuchElementException();
         }
+        E value = head.item;
         head = head.next;
         modCon++;
         size--;
+        return value;
     }
 
     public E deleteLast() {
