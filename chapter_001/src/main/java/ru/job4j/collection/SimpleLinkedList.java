@@ -105,8 +105,8 @@ public class SimpleLinkedList<E> implements Iterable<E> {
                 oldHead = oldHead.next;
                 addFirst(oldHead.item);
             }
+            modCon++;
         }
-        modCon++;
     }
 
     class SimpleLinkedListIterator<T> implements Iterator<T> {
