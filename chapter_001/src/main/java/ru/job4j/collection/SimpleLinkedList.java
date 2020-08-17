@@ -93,9 +93,19 @@ public class SimpleLinkedList<E> implements Iterable<E> {
         return tail.item;
     }
 
-    public boolean isEmpty()
-    {
+    public boolean isEmpty() {
         return size == 0;
+    }
+
+    public void revert() {
+        if (size != 0) {
+            Node<E> oldHead = head;
+            head = new Node<>(oldHead.item, null, null);
+            while (oldHead.next != null) {
+                oldHead = oldHead.next;
+                addFirst(oldHead.item);
+            }
+        }
     }
 
     class SimpleLinkedListIterator<T> implements Iterator<T> {

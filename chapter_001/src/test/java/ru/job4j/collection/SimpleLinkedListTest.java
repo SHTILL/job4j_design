@@ -97,4 +97,17 @@ public class SimpleLinkedListTest {
         assertThat(it.next(), is(2));
         assertFalse(it.hasNext());
     }
+
+    @Test
+    public void whenAddAndRevertThenIter() {
+        SimpleLinkedList<Integer> linked = new SimpleLinkedList<>();
+        linked.add(1);
+        linked.add(2);
+        linked.add(3);
+        linked.revert();
+        Iterator<Integer> it = linked.iterator();
+        assertThat(it.next(), is(3));
+        assertThat(it.next(), is(2));
+        assertThat(it.next(), is(1));
+    }
 }
