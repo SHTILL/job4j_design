@@ -106,6 +106,7 @@ public class SimpleLinkedList<E> implements Iterable<E> {
                 addFirst(oldHead.item);
             }
         }
+        modCon++;
     }
 
     class SimpleLinkedListIterator<T> implements Iterator<T> {
