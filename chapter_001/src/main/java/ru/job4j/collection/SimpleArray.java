@@ -15,7 +15,7 @@ public class SimpleArray<T> implements Iterable<T> {
         return (T) container[index];
     }
 
-    public void add(T model) {
+    public boolean add(T model) {
         if (position >= size) {
             size += EXTEND_BY;
             Object[] extended = new Object[size];
@@ -25,6 +25,20 @@ public class SimpleArray<T> implements Iterable<T> {
         container[position] = model;
         position++;
         modCount++;
+        return true;
+    }
+
+    public boolean contains(T value) {
+        for (int i0 = 0; i0 < position; i0++) {
+            if (container[i0].equals(value)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public int size() {
+        return position;
     }
 
     @Override
