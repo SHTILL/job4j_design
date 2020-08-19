@@ -30,7 +30,7 @@ public class SimpleArray<T> implements Iterable<T> {
 
     public boolean contains(T value) {
         for (int i0 = 0; i0 < position; i0++) {
-            if (container[i0].equals(value)) {
+            if (Objects.equals(container[i0], value)) {
                 return true;
             }
         }
