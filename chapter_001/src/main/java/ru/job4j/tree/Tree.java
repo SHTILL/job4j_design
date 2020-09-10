@@ -40,7 +40,7 @@ class Tree<E> implements SimpleTree<E> {
         while (!data.isEmpty()) {
             Node<E> el = data.poll();
             //If not a leaf or node with 2 children
-            if (el.children.size() != 0 && el.children.size() > 2) {
+            if (el.children.size() > 2) {
                 return false;
             }
             data.addAll(el.children);
