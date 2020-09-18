@@ -5,7 +5,6 @@ import java.util.List;
 public class Analyze {
     public static Info diff(List<User> previous, List<User> current) {
         Info info = new Info();
-        int unchanged = 0;
         boolean found = false;
         for (User cur: current) {
             found = false;
@@ -13,8 +12,6 @@ public class Analyze {
                 if (cur.id == prev.id) {
                     if (!cur.name.equals(prev.name)) {
                         info.changed++;
-                    } else {
-                        unchanged++;
                     }
                     found = true;
                 }
