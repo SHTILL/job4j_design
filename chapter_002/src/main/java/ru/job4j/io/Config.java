@@ -20,10 +20,11 @@ public class Config {
 
         try (BufferedReader read = new BufferedReader(new FileReader(this.path))) {
             String s = null;
+            Pattern p = Pattern.compile("^[\\w&&[^#]][\\w&&[^=]]+=[\\S&&[^=]]+$");
             do {
                 s = read.readLine();
                 if (s != null) {
-                    Matcher m = Pattern.compile("^[\\w&&[^#]][\\w&&[^=]]+=[\\S&&[^=]]+$").matcher(s);
+                    Matcher m = p.matcher(s);
                     if (m.matches()) {
                         String[] tokens = s.split("=");
                         values.put(tokens[0], tokens[1]);
