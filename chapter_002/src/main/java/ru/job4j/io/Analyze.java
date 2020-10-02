@@ -10,8 +10,7 @@ public class Analyze {
         List<String> unavailableTime = new ArrayList<>();
         String tmp = null;
 
-        boolean isDown = false;
-        boolean isDownPrev = false;
+        boolean wasDown = false;
         try (BufferedReader r = new BufferedReader(new FileReader(source))) {
             while (true) {
                 s = r.readLine();
@@ -23,22 +22,23 @@ public class Analyze {
                 String error = tokens[0];
                 String time = tokens[1];
 
-                isDown = !error.equals("200") && !error.equals("300");
-
-                if (isDown != isDownPrev) {
-                    if (isDown) {
-                        tmp = time + ";";
-                    } else {
+                if (error.equals("200") || error.equals("300")) {
+                    if (wasDown) {
                         unavailableTime.add(tmp + time + ";" + System.lineSeparator());
                     }
-                    isDownPrev = isDown;
+                    wasDown = false;
+                } else {
+                    if (!wasDown) {
+                        tmp = time + ";";
+                    }
+                    wasDown = true;
                 }
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        if (isDown) {
+        if (wasDown) {
             unavailableTime.add(tmp + System.lineSeparator());
         }
 
