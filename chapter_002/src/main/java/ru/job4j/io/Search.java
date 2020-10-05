@@ -8,8 +8,13 @@ import java.util.List;
 
 public class Search {
     public static void main(String[] args) throws IOException {
-        Path start = Paths.get(".");
-        search(start, "class").forEach(System.out::println);
+        if (args.length < 2) {
+            System.out.print("Parameters are specified incorrectly." + System.lineSeparator());
+            System.out.print("Usage:" + System.lineSeparator() + "java -jar search.jar ROOT_FOLDER FILE_EXTENSION." + System.lineSeparator());
+            throw new IllegalArgumentException();
+        }
+        Path start = Paths.get(args[0]);
+        search(start, args[1]).forEach(System.out::println);
     }
 
     public static List<Path> search(Path root, String ext) throws IOException {
