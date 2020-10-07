@@ -15,7 +15,6 @@ public class Zip {
             for (Path p: sources) {
                 File source = p.toFile();
                 zip.putNextEntry(new ZipEntry(source.getPath()));
-                packSingleFile(p.toFile(), target);
                 try (BufferedInputStream in = new BufferedInputStream(new FileInputStream(source))) {
                     zip.write(in.readAllBytes());
                 }
@@ -36,6 +35,12 @@ public class Zip {
         }
     }
 
+    private static List<Path> searchFiles(String dir, String ext) throws Exception {
+        SearchFiles searcher = new SearchFiles(p -> !p.toFile().getName().endsWith(ext));
+        Files.walkFileTree(Paths.get(dir), searcher);
+        return searcher.getPaths();
+    }
+
     public static void main(String[] args) throws Exception {
         ArgZip zipArgs = new ArgZip(args);
         if (!zipArgs.valid()) {
@@ -45,10 +50,9 @@ public class Zip {
             throw new IllegalArgumentException();
         }
 
-        SearchFiles searcher = new SearchFiles(p -> !p.toFile().getName().endsWith(zipArgs.exclude()));
-        Files.walkFileTree(Paths.get(zipArgs.directory()), searcher);
+        List<Path> foundFiles = searchFiles(zipArgs.directory(), zipArgs.exclude());
 
         Zip archive = new Zip();
-        archive.packFiles(searcher.getPaths(), new File(zipArgs.output()));
+        archive.packFiles(foundFiles, new File(zipArgs.output()));
     }
 }
