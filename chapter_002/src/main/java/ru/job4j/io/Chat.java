@@ -1,14 +1,14 @@
 package ru.job4j.io;
 
-import javax.sound.midi.Soundbank;
 import java.io.*;
-import java.lang.reflect.Array;
 import java.util.*;
+import java.util.function.Function;
 
 public class Chat {
-    private Scanner input;
     private List<String> phrases = new ArrayList<>();
+    private Map<String, Function<Chat, Boolean>> action = new HashMap<>();
     private File f;
+    boolean mute = false;
 
     public Chat(String path) throws IllegalArgumentException {
         this.f = new File(path);
@@ -17,32 +17,35 @@ public class Chat {
         }
     }
 
+    public void addAction(String cmd, Function<Chat, Boolean> f) {
+        action.put(cmd, f);
+    }
+
     public void init() throws IOException {
         Scanner input = new Scanner(System.in);
         String cmd;
-        boolean showPhrases = true;
-        loadPhrases();
+        boolean exit = false;
         int listSize = phrases.size();
+
+        loadPhrases();
         System.out.println("Испльзование");
         System.out.println("стоп|продолжить|закончить|?");
 
-        while (input.hasNext()) {
+        while (!exit) {
             cmd = input.next();
-            if (cmd.equals("стоп")) {
-                showPhrases = false;
+            Function<Chat, Boolean> f = action.get(cmd);
+            if (f != null) {
+                exit = f.apply(this);
             }
-            if (cmd.equals("продолжить")) {
-                showPhrases = true;
-            }
-            if (cmd.equals("закончить")) {
-                System.out.print("Пока-пока!!!");
-                break;
-            }
-            if (showPhrases) {
+            if (!mute) {
                 int idx = (int) (Math.random() * listSize);
                 System.out.println(phrases.get(idx));
             }
         }
+    }
+
+    public void setMute(boolean mute) {
+        this.mute = mute;
     }
 
     private void loadPhrases() throws IOException {
@@ -63,6 +66,11 @@ public class Chat {
         }
 
         Chat c = new Chat(args[0]);
+        c.addAction("стоп",       chat -> {
+            chat.setMute(true); return false; });
+        c.addAction("продолжить", chat -> {
+            chat.setMute(false); return false; });
+        c.addAction("закончить",  chat -> true);
         c.init();
     }
 }
