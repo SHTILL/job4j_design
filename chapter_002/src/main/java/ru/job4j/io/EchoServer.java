@@ -17,6 +17,8 @@ public class EchoServer {
                     String request;
                     request = in.readLine();
 
+                    String response = null;
+
                     if (!request.isEmpty()) {
                         System.out.println(request);
 
@@ -26,13 +28,33 @@ public class EchoServer {
                         }
 
                         String[] cmd    = request.split("\\s");
-                        String[] tokens = cmd[1].split("=");
+                        if (cmd.length == 3) {
+                            String[] tokens = cmd[1].split("=");
+                            if (tokens.length == 2) {
 
-                        if (tokens[1].equals("Buy")) {
-                            exit = true;
+                                switch (tokens[1]) {
+                                    case "Exit":
+                                        exit = true;
+                                        break;
+                                    case "What":
+                                        response = "What?";
+                                        break;
+                                    case "Hello":
+                                        response = "Hello dear, friend";
+                                        break;
+                                    default:
+                                        response = tokens[1];
+                                        break;
+                                }
+                            }
                         }
 
-                        out.write("HTTP/1.1 200 OK\r\n\\".getBytes());
+                        if (response != null) {
+                            out.write("HTTP/1.1 200 OK\r\n\r\n".getBytes());
+                            out.write(response.getBytes());
+                        } else {
+                            out.write("HTTP/1.1 200 OK\r\n".getBytes());
+                        }
                     }
                 }
             }
