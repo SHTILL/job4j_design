@@ -12,5 +12,15 @@ public class UsageLog4j {
         LOG.info("info message");
         LOG.warn("warn message");
         LOG.error("error message");
+
+        boolean boolVar = true;
+        char    charVar = 'c';
+        byte    byteVar = 17;
+        short   shortVar  = 1024;
+        int     intVar    = 65800;
+        long    longVar   = 123456789;
+        float   floatVar  = 168.78f;
+        double  doubleVar = 169.78;
+        LOG.debug("Variables are: {} {} {} {} {} {} {} {}", boolVar, charVar, byteVar, shortVar, intVar, longVar, floatVar, doubleVar);
     }
 }
