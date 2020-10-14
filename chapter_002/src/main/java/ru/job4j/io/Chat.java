@@ -1,10 +1,14 @@
 package ru.job4j.io;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.*;
 import java.util.*;
 import java.util.function.Function;
 
 public class Chat {
+    private static final Logger LOG = LoggerFactory.getLogger(UsageLog4j.class.getName());
     private List<String> phrases = new ArrayList<>();
     private Map<String, Function<Chat, Boolean>> action = new HashMap<>();
     private File f;
@@ -59,18 +63,27 @@ public class Chat {
         }
     }
 
-    public static void main(String[] args) throws Exception {
-        if (args.length < 1) {
-            System.out.print("Usage:" + System.lineSeparator() + "java -jar chat.jar FILE_NAME" + System.lineSeparator());
-            throw new IllegalArgumentException();
-        }
+    public static void main(String[] args) {
+        try {
+            if (args.length < 1) {
+                System.out.print("Usage:" + System.lineSeparator() + "java -jar chat.jar FILE_NAME" + System.lineSeparator());
+                throw new IllegalArgumentException();
+            }
 
-        Chat c = new Chat(args[0]);
-        c.addAction("стоп",       chat -> {
-            chat.setMute(true); return false; });
-        c.addAction("продолжить", chat -> {
-            chat.setMute(false); return false; });
-        c.addAction("закончить",  chat -> true);
-        c.init();
+
+            Chat c = new Chat(args[0]);
+            c.addAction("стоп", chat -> {
+                chat.setMute(true);
+                return false;
+            });
+            c.addAction("продолжить", chat -> {
+                chat.setMute(false);
+                return false;
+            });
+            c.addAction("закончить", chat -> true);
+            c.init();
+        } catch (Exception e) {
+            LOG.error("Exception", e);
+        }
     }
 }
