@@ -1,8 +1,6 @@
 package ru.job4j.serialization.json;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-
+import org.json.JSONObject;
 import java.util.Arrays;
 
 public class Person {
@@ -28,12 +26,27 @@ public class Person {
                 + '}';
     }
 
+    public boolean isSex() {
+        return sex;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public Contact getContact() {
+        return contact;
+    }
+
+    public String[] getStatuses() {
+        return statuses;
+    }
+
     public static void main(String[] args) {
         final Person person = new Person(false, 30, new Contact("11-111"), "Worker", "Married");
 
         /* Преобразуем объект person в json-строку. */
-        final Gson gson = new GsonBuilder().create();
-        System.out.println(gson.toJson(person));
+        System.out.println(new JSONObject(person));
 
         /* Модифицируем json-строку */
         final String personJson =
@@ -47,7 +60,6 @@ public class Person {
                         + "\"statuses\":"
                         + "[\"Student\",\"Free\"]"
                         + "}";
-        final Person personMod = gson.fromJson(personJson, Person.class);
-        System.out.println(personMod);
+        System.out.println(new JSONObject(personJson));
     }
 }
