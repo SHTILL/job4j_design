@@ -15,7 +15,7 @@ public class ConnectionDemo {
         String login = null;
         String password = null;
 
-        try (BufferedReader r = new BufferedReader(new FileReader("chapter_003/src/main/java/ru/job4j/jdbc/app.properties"))) {
+        try (BufferedReader r = new BufferedReader(new FileReader("chapter_003/src/main/resources/app.properties"))) {
             Pattern p = Pattern.compile("^\\w+=\\S+$");
             String line;
             while ((line = r.readLine()) != null) {
