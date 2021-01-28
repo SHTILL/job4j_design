@@ -1,0 +1,12 @@
+<?xml version="1.1" encoding="UTF-8" ?>
+<building balcony="ture" floors="5">
+	<city>SPb</city>
+	<address>
+		<street>Nevsky</street>
+		<house_number>77</house_number>
+	</address>
+	<owners>
+		<owner>Kolya</owner>
+		<owner>Petya</owner>
+	</owners>
+</building>
