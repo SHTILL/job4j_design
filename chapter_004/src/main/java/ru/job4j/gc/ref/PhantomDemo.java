@@ -37,9 +37,9 @@ public class PhantomDemo {
             for (ListIterator<MyPhantom> i = phantoms.listIterator(); i.hasNext();) {
                 MyPhantom current = i.next();
                 if (current != null && current.isEnqueued()) {
-                    //System.out.println("Utilized " + current.get());
                     current.clear();
                     i.remove();
+                    queue.poll();
                 }
             }
         }
