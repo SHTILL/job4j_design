@@ -43,18 +43,6 @@ public class PhantomDemo {
                 }
             }
         }
-
-        public void utilizeResourceCorrect() {
-            for (ListIterator<MyPhantom> i = phantoms.listIterator(); i.hasNext();) {
-                MyPhantom current = i.next();
-                if (current != null && current.isEnqueued()) {
-                    //System.out.println("Utilized " + current.get());
-                    current.clear();
-                    queue.poll();
-                    i.remove();
-                }
-            }
-        }
     }
 
     private static void example1() throws InterruptedException {
@@ -81,24 +69,9 @@ public class PhantomDemo {
         TimeUnit.SECONDS.sleep(3);
     }
 
-    private static void example3() throws InterruptedException {
-        PhantomStorage storage = new PhantomStorage();
-        for (int i = 0; i < 1_000_000; i++) {
-            String data = Integer.toString(i);
-            storage.add(data);
-            storage.utilizeResourceCorrect();
-            if (i % 1000 == 0) {
-                System.out.println("*");
-                System.gc();
-            }
-        }
-        TimeUnit.SECONDS.sleep(3);
-    }
-
     public static void main(String[] args) throws InterruptedException {
         //example1();
-        //example2();
-        example3();
+        example2();
     }
 
 }
