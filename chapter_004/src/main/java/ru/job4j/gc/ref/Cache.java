@@ -8,6 +8,7 @@ import java.lang.ref.SoftReference;
 import java.util.Map;
 import java.util.HashMap;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public class Cache<T> {
     private Map<String, SoftReference<T>> cache = new HashMap<>();
@@ -36,9 +37,7 @@ public class Cache<T> {
             String value = null;
             try (BufferedReader r = new BufferedReader(new FileReader(s))) {
                 System.out.printf("Read %s" + System.lineSeparator(), s);
-                StringBuilder b = new StringBuilder();
-                r.lines().forEach(b::append);
-                value = b.toString();
+                value = r.lines().collect(Collectors.joining());
             } catch (FileNotFoundException e) {
                 System.out.println("File is not found");
             } catch (IOException e) {
