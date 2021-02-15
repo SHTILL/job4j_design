@@ -1,0 +1,6 @@
+Benchmark                                                            (lines)                                           (origins)   Mode  Cnt        Score        Error  Units
+Article.measureFullScan           Мой дядя мог думать про тебя и день и ночь  Мой дядя самых честных правил, Когда не в шутку...  thrpt   25  2178511.834 ±  76327.956  ops/s
+Article.measureScanWithSet        Мой дядя мог думать про тебя и день и ночь  Мой дядя самых честных правил, Когда не в шутку...  thrpt   25   841307.452 ±  26724.787  ops/s
+Article.measureFullScan     Мой дядя мог думать про Linux и Java день и ночь  Мой дядя самых честных правил, Когда не в шутку...  thrpt   25  3837470.977 ± 189584.036  ops/s
+Article.measureScanWithSet  Мой дядя мог думать про Linux и Java день и ночь  Мой дядя самых честных правил, Когда не в шутку...  thrpt   25  1047870.335 ±  83476.002  ops/s
+
