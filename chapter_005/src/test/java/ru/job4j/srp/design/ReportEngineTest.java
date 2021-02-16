@@ -9,38 +9,102 @@ import static org.junit.Assert.assertThat;
 
 public class ReportEngineTest {
     @Test
-    public void whenOldGenerated() {
+    public void whenTextGenerated() {
         MemStore store = new MemStore();
         Calendar now = Calendar.getInstance();
         Employee worker = new Employee("Ivan", now, now, 100);
         store.add(worker);
-        Report engine = new ReportEngine(store, new TextGenerator());
-        StringBuilder expect = new StringBuilder()
-                .append("Name; Hired; Fired; Salary;")
-                .append(System.lineSeparator())
-                .append(worker.getName()).append(";")
-                .append(worker.getHired()).append(";")
-                .append(worker.getFired()).append(";")
-                .append(worker.getSalary()).append(";")
-                .append(System.lineSeparator());
-        assertThat(engine.generate(em -> true), is(expect.toString()));
+        StoreEngine reportEngine = new ReportEngine(store, new TextReportGenerator());
+        String expect = "Name; Hired; Fired; Salary;" +
+                System.lineSeparator() +
+                worker.getName() + ";" +
+                worker.getHired() + ";" +
+                worker.getFired() + ";" +
+                worker.getSalary() + ";";
+        assertThat(reportEngine.generate(em -> true), is(expect));
     }
 
     @Test
-    public void whenNewGenerated() {
+    public void whenHTMLGenerated() {
         MemStore store = new MemStore();
         Calendar now = Calendar.getInstance();
         Employee worker = new Employee("Ivan", now, now, 100);
         store.add(worker);
-        Report engine = new ReportEngine(store, new HTMLGenerator());
-        StringBuilder expect = new StringBuilder()
-                .append("<header> This is header </header>")
-                .append(System.lineSeparator())
-                .append("<name>").append(worker.getName()).append("</name>")
-                .append("<hired>").append(worker.getHired()).append("</hired>")
-                .append("<fired>").append(worker.getFired()).append("</fired>")
-                .append("<salary>").append(worker.getSalary()).append("</salary>")
-                .append(System.lineSeparator());
-        assertThat(engine.generate(em -> true), is(expect.toString()));
+        StoreEngine reportEngine = new ReportEngine(store, new HTMLReportGenerator());
+        String expect = "<html>" + System.lineSeparator() +
+                " <head></head>" + System.lineSeparator() +
+                " <body>" + System.lineSeparator() +
+                "  <employees>" + System.lineSeparator() +
+                "   <employee " +   "name=\"" + worker.getName() + "\" " +
+                                    "hired=\"" + worker.getHired().getTime() + "\" " +
+                                    "fired=\"" + worker.getFired().getTime() + "\" " +
+                                    "salary=\"" + worker.getSalary() + "\"" + ">" +
+                   "</employee>" + System.lineSeparator() +
+                "  </employees>" + System.lineSeparator() +
+                " </body>" + System.lineSeparator() +
+                "</html>";
+        assertThat(reportEngine.generate(em -> true), is(expect));
+    }
+
+    @Test
+    public void whenJSONGenerated() {
+        MemStore store = new MemStore();
+        Calendar now = Calendar.getInstance();
+        Employee worker  = new Employee("Ivan", now, now, 100);
+        store.add(worker);
+        StoreEngine storeEngine = new ReportEngine(store, new JSONReportGenerator());
+        String expect = "{" +
+                            "\"employees\":[" +
+                                "{" +
+                                    "\"name\":\"" + worker.getName() + "\"," +
+                                    "\"hired\":{" +
+                                        "\"year\":" + worker.getHired().get(Calendar.YEAR) + "," +
+                                        "\"month\":" + worker.getHired().get(Calendar.MONTH) + "," +
+                                        "\"dayOfMonth\":" + worker.getHired().get(Calendar.DAY_OF_MONTH) + "," +
+                                        "\"hourOfDay\":" + worker.getHired().get(Calendar.HOUR_OF_DAY) + "," +
+                                        "\"minute\":" + worker.getHired().get(Calendar.MINUTE) + "," +
+                                        "\"second\":" + worker.getHired().get(Calendar.SECOND) +
+                                    "}," +
+                                    "\"fired\":{" +
+                                        "\"year\":" + worker.getFired().get(Calendar.YEAR) + "," +
+                                        "\"month\":" + worker.getFired().get(Calendar.MONTH) + "," +
+                                        "\"dayOfMonth\":" + worker.getFired().get(Calendar.DAY_OF_MONTH) + "," +
+                                        "\"hourOfDay\":" + worker.getFired().get(Calendar.HOUR_OF_DAY) + "," +
+                                        "\"minute\":" + worker.getFired().get(Calendar.MINUTE) + "," +
+                                        "\"second\":" + worker.getFired().get(Calendar.SECOND) +
+                                    "}," +
+                                    "\"salary\":" + worker.getSalary() +
+                                "}" +
+                            "]" +
+                        "}";
+        assertThat(storeEngine.generate(em -> true), is(expect));
+    }
+
+    @Test
+    public void whenXMLGenerated() {
+        MemStore store = new MemStore();
+        Calendar now = Calendar.getInstance();
+        Employee worker = new Employee("Ivan", now, now, 100);
+        store.add(worker);
+        StoreEngine reportEngine = new ReportEngine(store, new XMLReportGenerator());
+        String expect = "<report>" + System.lineSeparator() +
+                "  <employees>" + System.lineSeparator() +
+                "    <employee>" + System.lineSeparator() +
+                "      <name>" + worker.getName() + "</name>" + System.lineSeparator() +
+                "      <hired>" +
+                            worker.getHired().get(Calendar.DAY_OF_MONTH) + "/" +
+                            String.format("%02d", worker.getHired().get(Calendar.MONTH) + 1) + "/" +
+                            worker.getHired().get(Calendar.YEAR) +
+                        "</hired>" + System.lineSeparator() +
+                "      <fired>" +
+                            worker.getFired().get(Calendar.DAY_OF_MONTH) + "/" +
+                            String.format("%02d", worker.getFired().get(Calendar.MONTH) + 1) + "/" +
+                            worker.getFired().get(Calendar.YEAR) +
+                        "</fired>" + System.lineSeparator() +
+                "      <salary>" + worker.getSalary() + "</salary>" + System.lineSeparator() +
+                "    </employee>" + System.lineSeparator() +
+                "  </employees>" + System.lineSeparator() +
+                "</report>" + System.lineSeparator();
+        assertThat(reportEngine.generate(em -> true), is(expect));
     }
 }

@@ -8,7 +8,7 @@ import java.util.Map;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
-public class GeneratorTest {
+public class ReportGeneratorTest {
     @Test
     public void whenGenerated() {
         Map<String, String> args = new HashMap<>();

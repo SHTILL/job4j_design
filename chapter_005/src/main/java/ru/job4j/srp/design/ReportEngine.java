@@ -2,22 +2,17 @@ package ru.job4j.srp.design;
 
 import java.util.function.Predicate;
 
-public class ReportEngine implements Report {
+public class ReportEngine implements StoreEngine {
     private Store store;
-    private ReportGenerator generator;
+    private ReportGenerator reportGenerator;
 
     public ReportEngine(Store store, ReportGenerator g) {
         this.store = store;
-        this.generator = g;
+        this.reportGenerator = g;
     }
 
     @Override
     public String generate(Predicate<Employee> filter) {
-        StringBuilder text = new StringBuilder();
-        text.append(generator.header());
-        for (Employee employee : store.findBy(filter)) {
-            text.append(generator.generate(employee));
-        }
-        return text.toString();
+        return reportGenerator.generate(new Report(store.findBy(filter)));
     }
 }

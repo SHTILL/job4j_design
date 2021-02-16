@@ -1,11 +1,15 @@
 package ru.job4j.srp.design;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 import java.util.Calendar;
 import java.util.Objects;
 
 public class Employee {
     private String name;
+    @JsonSerialize(using = CalendarSerializer.class)
     private Calendar hired;
+    @JsonSerialize(using = CalendarSerializer.class)
     private Calendar fired;
     private double salary;
 
