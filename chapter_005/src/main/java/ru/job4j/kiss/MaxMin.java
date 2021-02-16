@@ -2,12 +2,13 @@ package ru.job4j.kiss;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.function.Predicate;
 
 public class MaxMin {
-    private static <T> T scan(List<T> value, Comparator<T> comparator, Comparator<Integer> f) {
+    private static <T> T scan(List<T> value, Comparator<T> comparator, Predicate<Integer> f) {
         T extremum = value.get(0);
         for (T c: value) {
-            if (f.compare(0, comparator.compare(extremum, c)) > 0) {
+            if (f.test(comparator.compare(c, extremum))) {
                 extremum = c;
             }
         }
@@ -15,10 +16,10 @@ public class MaxMin {
     }
 
     public static <T> T max(List<T> value, Comparator<T> comparator) {
-        return scan(value, comparator, Integer::compare);
+        return scan(value, comparator, i -> i > 0);
     }
 
     public static <T> T min(List<T> value, Comparator<T> comparator) {
-        return scan(value, comparator, (i1, i2) -> Integer.compare(i2, i1));
+        return scan(value, comparator, i -> i < 0);
     }
 }
