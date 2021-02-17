@@ -1,5 +1,5 @@
 package ru.job4j.srp.design;
 
-public interface ReportGenerator<T> {
+public interface Generator<T> {
     String generate(T r);
 }

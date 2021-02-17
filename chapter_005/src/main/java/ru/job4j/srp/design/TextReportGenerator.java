@@ -2,9 +2,9 @@ package ru.job4j.srp.design;
 
 import java.util.Iterator;
 
-public class TextReportGenerator implements ReportGenerator<ReportEmployees> {
+public class TextReportGenerator implements Generator<Report> {
     @Override
-    public String generate(ReportEmployees r) {
+    public String generate(Report r) {
         StringBuilder text = new StringBuilder();
         text.append("Name; Hired; Fired; Salary;").append(System.lineSeparator());
         for (Iterator<Employee> i = r.getEmployees().iterator(); i.hasNext();) {

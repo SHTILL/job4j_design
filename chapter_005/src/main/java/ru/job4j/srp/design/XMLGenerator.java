@@ -4,7 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 
-public class XMLReportGenerator implements ReportGenerator<Object> {
+public class XMLGenerator implements Generator<Object> {
     @Override
     public String generate(Object r) {
         try {

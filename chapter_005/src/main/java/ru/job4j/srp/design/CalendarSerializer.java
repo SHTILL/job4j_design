@@ -18,6 +18,5 @@ public class CalendarSerializer extends JsonSerializer<Calendar> {
 
         String dateAsString = formatter.format(calendar.getTime());
         jsonGenerator.writeString(dateAsString);
-
     }
 }
