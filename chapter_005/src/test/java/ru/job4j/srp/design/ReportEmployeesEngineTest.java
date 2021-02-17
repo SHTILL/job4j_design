@@ -18,8 +18,8 @@ public class ReportEmployeesEngineTest {
         String expect = "Name; Hired; Fired; Salary;" +
                 System.lineSeparator() +
                 worker.getName() + ";" +
-                worker.getHired() + ";" +
-                worker.getFired() + ";" +
+                worker.getHired().getTime() + ";" +
+                worker.getFired().getTime() + ";" +
                 worker.getSalary() + ";";
         assertThat(reportEngine.generate(em -> true), is(expect));
     }
