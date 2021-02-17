@@ -7,14 +7,14 @@ import java.util.Calendar;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
-public class ReportEngineTest {
+public class ReportEmployeesEngineTest {
     @Test
     public void whenTextGenerated() {
         MemStore store = new MemStore();
         Calendar now = Calendar.getInstance();
         Employee worker = new Employee("Ivan", now, now, 100);
         store.add(worker);
-        StoreEngine reportEngine = new ReportEngine(store, new TextReportGenerator());
+        StoreEngine reportEngine = new EmployeesReportEngine(store, new TextReportGenerator());
         String expect = "Name; Hired; Fired; Salary;" +
                 System.lineSeparator() +
                 worker.getName() + ";" +
@@ -30,7 +30,7 @@ public class ReportEngineTest {
         Calendar now = Calendar.getInstance();
         Employee worker = new Employee("Ivan", now, now, 100);
         store.add(worker);
-        StoreEngine reportEngine = new ReportEngine(store, new HTMLReportGenerator());
+        StoreEngine reportEngine = new EmployeesReportEngine(store, new HTMLReportGenerator());
         String expect = "<html>" + System.lineSeparator() +
                 " <head></head>" + System.lineSeparator() +
                 " <body>" + System.lineSeparator() +
@@ -52,7 +52,7 @@ public class ReportEngineTest {
         Calendar now = Calendar.getInstance();
         Employee worker  = new Employee("Ivan", now, now, 100);
         store.add(worker);
-        StoreEngine storeEngine = new ReportEngine(store, new JSONReportGenerator());
+        StoreEngine storeEngine = new EmployeesReportEngine(store, new JSONReportGenerator());
         String expect = "{" +
                             "\"employees\":[" +
                                 "{" +
@@ -86,7 +86,7 @@ public class ReportEngineTest {
         Calendar now = Calendar.getInstance();
         Employee worker = new Employee("Ivan", now, now, 100);
         store.add(worker);
-        StoreEngine reportEngine = new ReportEngine(store, new XMLReportGenerator());
+        StoreEngine reportEngine = new EmployeesReportEngine(store, new XMLReportGenerator());
         String expect = "<report>" + System.lineSeparator() +
                 "  <employees>" + System.lineSeparator() +
                 "    <employee>" + System.lineSeparator() +

@@ -3,9 +3,9 @@ package ru.job4j.srp.design;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
-public class HTMLReportGenerator implements ReportGenerator {
+public class HTMLReportGenerator implements ReportGenerator<ReportEmployees> {
     @Override
-    public String generate(Report r) {
+    public String generate(ReportEmployees r) {
         Document doc = Document.createShell("");
         Element arrayTag = doc.body().appendElement("employees");
         for (Employee employee: r.getEmployees()) {
