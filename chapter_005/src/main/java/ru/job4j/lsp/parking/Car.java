@@ -5,7 +5,7 @@ public class Car {
     private int parkingSpaceRequired;
 
     public Car(String name, int parkingSpaceRequired) {
-        if (parkingSpaceRequired == 0) {
+        if (parkingSpaceRequired <= 0) {
             throw new IllegalArgumentException("Car must occupy at least 1 parking space");
         }
         this.parkingSpaceRequired = parkingSpaceRequired;
