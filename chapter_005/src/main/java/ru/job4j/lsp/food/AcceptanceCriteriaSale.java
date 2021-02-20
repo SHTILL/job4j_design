@@ -1,9 +1,9 @@
 package ru.job4j.lsp.food;
 
-public class ControlQualitySale extends ControlQuality {
+public class AcceptanceCriteriaSale extends AcceptanceCriteria {
     @Override
     public boolean checkQuality(Food f) {
-        double p = ControlQuality.calcPercent(f);
+        double p = AcceptanceCriteria.calcPercent(f);
         boolean goodForSale = (p <= 0.75 && p >= 0);
         if (goodForSale && p < 0.25) {
             f.setDiscount(0.5);

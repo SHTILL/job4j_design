@@ -4,19 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Storage {
-    private ControlQuality control;
+    private AcceptanceCriteria controller;
     private List<Food> stored = new ArrayList<>();
 
-    public Storage(ControlQuality control) {
-        this.control = control;
+    public Storage(AcceptanceCriteria controller) {
+        this.controller = controller;
     }
 
-    public void storeFood(Food f) {
-        stored.add(f);
-    }
-
-    public void add(Food f) {
-        if (control.checkQuality(f)) {
+    public void accept(Food f) {
+        if (controller.checkQuality(f)) {
             stored.add(f);
         }
     }

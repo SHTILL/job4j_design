@@ -4,24 +4,22 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import static java.time.OffsetDateTime.now;
-import static java.time.temporal.ChronoUnit.DAYS;
-
-public abstract class ControlQuality {
-    protected static double calcPercent(Food f) {
-        long lifeTime = DAYS.between(f.getCreateDate().toInstant(), f.getExpiryDate().toInstant());
-        long beforeExpired = DAYS.between(now().toInstant(), f.getExpiryDate().toInstant());
-        return ((float) beforeExpired / lifeTime);
+public class QualityControl {
+    public static void distributeFood(List<Storage>  storage, List<Food> food) {
+        for (Food f: food) {
+            for (Storage s: storage) {
+                s.accept(f);
+            }
+        }
     }
-    abstract boolean checkQuality(Food f);
 
     public static void main(String[] args) {
         List<Storage> storage = new ArrayList<>();
-        Storage wareHouse = new Warehouse(new ControlQualityStore());
+        Storage wareHouse = new Warehouse(new AcceptanceCriteriaStore());
         storage.add(wareHouse);
-        Storage shop = new Shop(new ControlQualitySale());
+        Storage shop = new Shop(new AcceptanceCriteriaSale());
         storage.add(shop);
-        Storage trash = new Trash(new ControlQualitySpoiled());
+        Storage trash = new Trash(new AcceptanceCriteriaSpoiled());
         storage.add(trash);
 
         List<Food> food = new ArrayList<>();
@@ -50,11 +48,7 @@ public abstract class ControlQuality {
         created.add(Calendar.DATE, -5);
         food.add(new Food("Meet", expired, created, 15.0, 0.0));
 
-        for (Food f: food) {
-            for (Storage s: storage) {
-                s.add(f);
-            }
-        }
+        QualityControl.distributeFood(storage, food);
 
         System.out.println("Warehouse: " + wareHouse.getStored());
         System.out.println("Shop: " + shop.getStored());
