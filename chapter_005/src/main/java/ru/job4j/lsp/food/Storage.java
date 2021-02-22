@@ -1,6 +1,7 @@
 package ru.job4j.lsp.food;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import static java.time.OffsetDateTime.now;
@@ -27,5 +28,10 @@ public abstract class Storage {
 
     public boolean needsDiscount(Food f) {
         return false;
+    }
+
+    public void dumpTo(Collection<Food> dest) {
+        dest.addAll(stored);
+        stored.clear();
     }
 }

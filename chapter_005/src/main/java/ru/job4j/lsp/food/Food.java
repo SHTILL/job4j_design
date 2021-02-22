@@ -30,10 +30,6 @@ public class Food {
         this.discount = discount;
     }
 
-    public double getDiscount() {
-        return discount;
-    }
-
     public Calendar getExpiryDate() {
         return expiryDate;
     }
@@ -49,5 +45,9 @@ public class Food {
                 + ", created=" + createDate.get(Calendar.DATE) + "/" + createDate.get(Calendar.MONTH)
                 + ", discount=" + discount
                 + '}';
+    }
+
+    public void setExpiryDate(Calendar expiryDate) {
+        this.expiryDate = expiryDate;
     }
 }

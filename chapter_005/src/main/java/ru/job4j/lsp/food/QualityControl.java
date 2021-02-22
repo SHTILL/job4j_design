@@ -23,6 +23,16 @@ public class QualityControl {
         }
     }
 
+    public void resort() {
+        List<Food> food = new ArrayList<>();
+        for (Storage s: storage) {
+            s.dumpTo(food);
+        }
+        for (Food f: food) {
+            this.distributeFood(f);
+        }
+    }
+
     public static void main(String[] args) {
         List<Storage> storage = new ArrayList<>();
         Storage wareHouse = new Warehouse();
@@ -49,7 +59,8 @@ public class QualityControl {
         created = Calendar.getInstance();
         expired.add(Calendar.DATE, 2);
         created.add(Calendar.DATE, -20);
-        q.distributeFood(new Food("Milk", expired, created, 15.0, 0.0));
+        Food milk = new Food("Milk", expired, created, 15.0, 0.0);
+        q.distributeFood(milk);
 
         expired = Calendar.getInstance();
         created = Calendar.getInstance();
@@ -57,6 +68,14 @@ public class QualityControl {
         created.add(Calendar.DATE, -5);
         q.distributeFood(new Food("Meet", expired, created, 15.0, 0.0));
 
+        System.out.println("Warehouse: " + wareHouse.getStored());
+        System.out.println("Shop: " + shop.getStored());
+        System.out.println("Trash: " + trash.getStored());
+
+        milk.setExpiryDate(expired);
+        q.resort();
+
+        System.out.println("Resort:");
         System.out.println("Warehouse: " + wareHouse.getStored());
         System.out.println("Shop: " + shop.getStored());
         System.out.println("Trash: " + trash.getStored());
