@@ -1,7 +1,9 @@
 package ru.job4j.lsp.food;
 
 public class Warehouse extends Storage {
-    public Warehouse(AcceptanceCriteria q) {
-        super(q);
+    @Override
+    public boolean accept(Food f) {
+        double p = calcPercent(f);
+        return (p < 0.25);
     }
 }

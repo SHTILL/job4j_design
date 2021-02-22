@@ -1,7 +1,9 @@
 package ru.job4j.lsp.food;
 
 public class Trash extends Storage {
-    public Trash(AcceptanceCriteria q) {
-        super(q);
+    @Override
+    public boolean accept(Food f) {
+        double p = calcPercent(f);
+        return (p >= 1);
     }
 }
