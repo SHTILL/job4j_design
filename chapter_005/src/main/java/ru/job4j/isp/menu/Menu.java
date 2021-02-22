@@ -22,4 +22,19 @@ public class Menu extends MenuComponent {
             i.print();
         }
     }
+
+    public MenuComponent find(String name) {
+        MenuComponent found = null;
+        if (name.equals(this.name)) {
+            found = this;
+        } else {
+            for (MenuComponent m: items) {
+                found = m.find(name);
+                if (found != null) {
+                    break;
+                }
+            }
+        }
+        return found;
+    }
 }

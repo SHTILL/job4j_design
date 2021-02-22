@@ -9,4 +9,12 @@ public class MenuItem extends MenuComponent {
     public void print() {
         System.out.println(name);
     }
+
+    @Override
+    public MenuComponent find(String name) {
+        if (name.equals(this.name)) {
+            return this;
+        }
+        return null;
+    }
 }
