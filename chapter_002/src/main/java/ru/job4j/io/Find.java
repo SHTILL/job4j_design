@@ -93,8 +93,9 @@ public class Find {
             } else {
                 f.formatter.printHelp("java -jar find.jar [options]", f.options);
             }
-        } catch (IOException e) {
-            System.out.println("Search failed. Either directory for search is missing or outfile is inaccessible!!!");
+        } catch (Exception e) {
+            System.out.println("Search failed. Either parameters are incorrect or directory for search is missing or outfile is inaccessible!!!");
+            f.formatter.printHelp("java -jar find.jar [options]", f.options);
         }
     }
 }
