@@ -73,6 +73,9 @@ public class Find {
         String searchType = line.getOptionValue("t");
         String searchString = line.getOptionValue("n");
         SearchMethod method = SearchFactory.getSearch(searchType, searchString);
+        if (method == null) {
+            return false;
+        }
 
         Path dir = Paths.get(line.getOptionValue("d"));
         List<Path> foundFiles = search(dir, method);
